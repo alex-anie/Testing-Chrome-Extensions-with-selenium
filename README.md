@@ -1,4 +1,4 @@
-# nski
+# Testing-Chrome-Extensions-with-selenium
 
 A Node.js project for web automation testing using Selenium WebDriver.
 
@@ -16,8 +16,8 @@ This project is set up for testing browser extension using Selenium WebDriver wi
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd nski
+git clone https://github.com/alex-anie/Testing-Chrome-Extensions-with-selenium.git
+cd <project directory>
 ```
 
 2. Install dependencies:
