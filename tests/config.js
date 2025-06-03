@@ -1,66 +1,59 @@
-const {Builder, Browser} = require("selenium-webdriver");
-const chrome = require("selenium-webdriver/chrome");
-const {should} = require("chai");
-should();
+const fs = require('fs');
+const path = require('path');
+const { Builder } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+require('dotenv').config();
 
-class ExtensionTestConfig {
-    static async createDriver() {
-        const options = new chrome.Options();
-        options.addExtensions(['./extensions/LambdaTest-Chrome-Web-Store.crx']);
-        options.addArguments('--enable-extensions-api-debugging');
-        options.addArguments('--extensions-on-chrome-urls');
-        
-        return await new Builder()
-            .forBrowser(Browser.CHROME)
-            .setChromeOptions(options)
-            .build();
+class CreateDriver {
+  constructor() {
+    this.USERNAME = process.env.LT_USERNAME;
+    this.KEY = process.env.LT_ACCESS_KEY;
+    this.GRID_HOST = 'hub.lambdatest.com/wd/hub';
+    this.extensionPath = path.resolve('./extensions/dict/ezyZip/Google-Dictionary-by-Google-Chrome-Web-Store.crx');
+  }
+
+  async build() {
+    if (!fs.existsSync(this.extensionPath)) {
+      throw new Error(`Extension file not found: ${this.extensionPath}`);
     }
 
-    static async getExtensionId(driver) {
-        try {
-        await driver.get('chrome://extensions/');
-        await driver.sleep(2000);
+    console.log(`🧩 Loading extension from: ${this.extensionPath}`);
 
-        const extensionItems = await driver.findElements(By.css('extensions-item'));
+    const chromeOptions = new chrome.Options();
+    chromeOptions.addExtensions(this.extensionPath);
+    chromeOptions.addArguments("--disable-features=DisableLoadExtensionCommandLineSwitch");
 
-        for (let item of extensionItems) {
-            // Access the shadow root
-            const shadowRoot = await driver.executeScript("return arguments[0].shadowRoot", item);
+    const capabilities = {
+      browserName: 'Chrome',
+      'LT:Options': {
+        name: 'Load chrome extension with selenium',
+        build: 'Interacting with chrome extension with selenium',
+        project: 'LambdaTest Chrome Extension Testings',
+        w3c: true,
+        plugin: 'NodeJS',
+        customData: {
+          _id: '5f46aaa69adf77cfe2bb4fd6',
+          index: '0',
+          guid: '9451b204-12f0-4177-8fe9-fb019b3e4bf3',
+          isActive: 'False',
+          picture: 'http://placehold.it/32x32',
+        },
+        'goog:chromeOptions': {
+          args: ['--disable-features=DisableLoadExtensionCommandLineSwitch', '--no-sandbox'],
+          extensions: [fs.readFileSync(this.extensionPath, 'base64')],
+        },
+      },
+    };
 
-            // Get the name inside the shadow root
-            const nameElement = await driver.executeScript(`
-                return arguments[0].querySelector('.name')?.innerText;
-            `, shadowRoot);
+    const gridUrl = `https://${this.USERNAME}:${this.KEY}@${this.GRID_HOST}`;
 
-            if (nameElement && nameElement.includes("LambdaTest")) {
-                const id = await item.getAttribute('id');
-                return id;
-            }
-        }
-
-        return 'your-known-extension-id'; // fallback
-    } catch (err) {
-        console.error("Error getting extension ID: ", err);
-        return 'your-known-extension-id';
-    }
-    }
-
-    static async waitForExtensionLoad(driver, timeout = 10000) {
-        const start = Date.now();
-        while (Date.now() - start < timeout) {
-            try {
-                const extensionLoaded = await driver.executeScript(`
-                    return document.readyState === 'complete' && 
-                        (window.extensionLoaded || document.querySelector('[data-extension-loaded]') !== null);
-                `);
-                if (extensionLoaded) return true;
-            } catch (e) {
-                // Continue waiting
-            }
-            await driver.sleep(500);
-        }
-        throw new Error('Extension failed to load within timeout');
-    }
+    return new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(chromeOptions)
+      .usingServer(gridUrl)
+      .withCapabilities(capabilities)
+      .build();
+  }
 }
 
-module.exports = ExtensionTestConfig;
+module.exports = CreateDriver;
