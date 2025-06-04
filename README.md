@@ -25,6 +25,11 @@ cd <project directory>
 npm install
 ```
 
+4. Run the test locally on the terminal:
+```bash
+node tests/launch-extension.spec.js
+```
+
 ## Dependencies
 
 ### Production Dependencies
