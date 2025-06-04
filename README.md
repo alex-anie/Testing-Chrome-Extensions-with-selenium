@@ -4,7 +4,7 @@ A Node.js project for web automation testing using Selenium WebDriver.
 
 ## Description
 
-This project is set up for testing browser extension using Selenium WebDriver with Chrome. It includes testing frameworks and dependencies for building automated web testing suites.
+This project is set up for testing a browser extension using Selenium WebDriver with Chrome. It includes testing frameworks and dependencies for building automated web testing suites.
 
 ## Prerequisites
 
