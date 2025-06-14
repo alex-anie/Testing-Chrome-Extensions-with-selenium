@@ -9,7 +9,7 @@ async function run() {
   let driver;
 
     try {
-
+      
       driver = await driverFactory.build();
         // Open the extensions page
         await driver.get('chrome-extension://mgijmajocgfcbeboacabfgobmjgjcoja/browser_action.html');

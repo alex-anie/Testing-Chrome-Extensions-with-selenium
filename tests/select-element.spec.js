@@ -2,10 +2,6 @@ const CreateDriver = require('./config');
 const {By, Key} = require('selenium-webdriver');
 const  {expect} = require('chai');
 
-
-
-
-
 async function run() {
      const driverFactory = new CreateDriver();
 

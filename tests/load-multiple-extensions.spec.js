@@ -1,4 +1,4 @@
-const CreateDriver = require('./config2');
+const CreateDriver = require('./config1');
 const { By } = require('selenium-webdriver');
 
 const driverClass = new CreateDriver([

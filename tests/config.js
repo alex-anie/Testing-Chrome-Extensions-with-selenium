@@ -9,7 +9,7 @@ class CreateDriver {
     this.USERNAME = process.env.LT_USERNAME;
     this.KEY = process.env.LT_ACCESS_KEY;
     this.GRID_HOST = 'hub.lambdatest.com/wd/hub';
-    this.extensionPath = path.resolve('./extensions/dict/ezyZip/Google-Dictionary-by-Google-Chrome-Web-Store.crx');
+    this.extensionPath = path.resolve('./extensions/Google-Dictionary-by-Google-Chrome-Web-Store.crx');
   }
 
   async build() {
@@ -50,8 +50,8 @@ class CreateDriver {
     return new Builder()
       .forBrowser('chrome')
       .setChromeOptions(chromeOptions)
-      .usingServer(gridUrl)
-      .withCapabilities(capabilities)
+      // .usingServer(gridUrl)
+      // .withCapabilities(capabilities)
       .build();
   }
 }

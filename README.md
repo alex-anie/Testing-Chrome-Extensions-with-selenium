@@ -25,6 +25,11 @@ cd <project directory>
 npm install
 ```
 
+4. Run the test locally on the terminal:
+```bash
+node tests/launch-extension.spec.js
+```
+
 ## Dependencies
 
 ### Production Dependencies
@@ -32,5 +37,4 @@ npm install
 - **chromedriver** (^136.0.3) - Chrome browser driver for Selenium
 
 ### Development Dependencies
-- **mocha** (^11.5.0) - JavaScript test framework
 - **chai** (^5.2.0) - Assertion library for testing
