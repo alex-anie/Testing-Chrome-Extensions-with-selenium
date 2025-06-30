@@ -14,9 +14,7 @@ async function runDoubleClickTest() {
     await driver.sleep(3000); // wait for page to fully load
 
     // Step 2: Locate the target <p> tag
-    const pElement = await driver.findElement(By.css(
-      '#content > div.col-md-12.blog-padd0.sigl-page > div.col-lg-7.col-sm-11.col-xs-12 > div.blog_content > p:nth-child(26)'
-    ));
+    const pElement = await driver.findElement(By.css('#how-to-handle-static-dropdowns + p'));
 
     // Step 3: Extract innerText to find "selection"
     const text = await pElement.getText();
