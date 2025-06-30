@@ -11,7 +11,8 @@ async function run() {
     try {
       
       driver = await driverFactory.build();
-        // Open the extensions page
+        // Open the extensions page 
+        // her the extension id is mgijmajocgfcbeboacabfgobmjgjcoja
         await driver.get('chrome-extension://mgijmajocgfcbeboacabfgobmjgjcoja/browser_action.html');
         await driver.sleep(3000);
 

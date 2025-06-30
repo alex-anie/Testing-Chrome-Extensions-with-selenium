@@ -21,7 +21,7 @@ class CreateDriver {
 
     const chromeOptions = new chrome.Options();
     chromeOptions.addExtensions(this.extensionPath);
-    chromeOptions.addArguments("--disable-features=DisableLoadExtensionCommandLineSwitch");
+    // chromeOptions.addArguments("--disable-features=DisableLoadExtensionCommandLineSwitch");
 
     const capabilities = {
       browserName: 'Chrome',

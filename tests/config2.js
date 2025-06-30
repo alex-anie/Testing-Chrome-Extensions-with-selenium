@@ -46,8 +46,8 @@ class CreateDriver {
     const driver = await new Builder()
       .forBrowser('chrome')
       .setChromeOptions(chromeOptions)
-      // .usingServer(gridUrl)
-      // .withCapabilities(capabilities)
+      .usingServer(gridUrl)
+      .withCapabilities(capabilities)
       .build();
 
     return driver;
